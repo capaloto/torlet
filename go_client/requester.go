@@ -28,12 +28,11 @@ func (t *Torlet) Init() error {
 	}
 	transport.Dial = dialer.Dial
 	t.httpClient = &http.Client{Transport: transport}
-	log.Println(fmt.Sprintf("Tor connected, IP - %s", t.CheckIP()))
+	log.Println(fmt.Sprintf("tor connected, IP - %s", t.CheckEndpointIP()))
 	return nil
 }
 
 func (t *Torlet) ResetCircuit() error {
-	log.Println("Reseting tor circuit")
 	err := t.control.dial()
 	if err != nil {
 		return err
@@ -43,7 +42,7 @@ func (t *Torlet) ResetCircuit() error {
 		return err
 	}
 	t.control.close()
-	log.Println("Tor circuit reset, IP - %s", t.CheckIP())
+	log.Println(fmt.Sprintf("tor circuit reset, IP - %s", t.CheckEndpointIP()))
 	return nil
 }
 
